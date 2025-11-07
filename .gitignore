@@ -1,0 +1,15 @@
+# Node.js dependencies
+web/backend/node_modules/
+
+# IDE files
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build files
+*.exe
+*.obj
