@@ -1,0 +1,448 @@
+version: "4.1"
+name: test2
+type: ARM
+deviceName: null
+packDir: .pack/Keil/STM32F4xx_DFP.2.14.0
+srcDirs: []
+virtualFolder:
+  name: <virtual_root>
+  files: []
+  folders:
+    - name: Application
+      files: []
+      folders:
+        - name: MDK-ARM
+          files:
+            - path: startup_stm32f429xx.s
+          folders: []
+        - name: User
+          files: []
+          folders:
+            - name: Core
+              files:
+                - path: ../Core/Src/main.c
+                - path: ../Core/Src/gpio.c
+                - path: ../Core/Src/adc.c
+                - path: ../Core/Src/dac.c
+                - path: ../Core/Src/dma.c
+                - path: ../Core/Src/i2c.c
+                - path: ../Core/Src/sdio.c
+                - path: ../Core/Src/spi.c
+                - path: ../Core/Src/tim.c
+                - path: ../Core/Src/usart.c
+                - path: ../Core/Src/stm32f4xx_it.c
+                - path: ../Core/Src/stm32f4xx_hal_msp.c
+              folders: []
+            - name: FATFS
+              files: []
+              folders:
+                - name: Target
+                  files:
+                    - path: ../FATFS/Target/bsp_driver_sd.c
+                    - path: ../FATFS/Target/sd_diskio.c
+                  folders: []
+                - name: App
+                  files:
+                    - path: ../FATFS/App/fatfs.c
+                  folders: []
+    - name: APP
+      files:
+        - path: ../APP/mydefine.h
+        - path: ../APP/btn_app.c
+        - path: ../APP/key_app.c
+        - path: ../APP/led_app.c
+        - path: ../APP/scheduler.c
+        - path: ../APP/uart_app.c
+        - path: ../APP/adc_app.c
+        - path: ../APP/dac_app.c
+        - path: ../APP/waveform_analyzer_app.c
+        - path: ../APP/oled_app.c
+        - path: ../APP/u8g2_port.c
+        - path: ../APP/wououi_app.c
+        - path: ../APP/flash_app.c
+        - path: ../APP/shell_app.c
+        - path: ../APP/sd_fatfs.c
+        - path: ../APP/4g_web.c
+      folders: []
+    - name: Components
+      files: []
+      folders:
+        - name: u8d2
+          files:
+            - path: ../Components/u8g2/mui.c
+            - path: ../Components/u8g2/mui_u8g2.c
+            - path: ../Components/u8g2/u8g2_arc.c
+            - path: ../Components/u8g2/u8g2_bitmap.c
+            - path: ../Components/u8g2/u8g2_box.c
+            - path: ../Components/u8g2/u8g2_buffer.c
+            - path: ../Components/u8g2/u8g2_button.c
+            - path: ../Components/u8g2/u8g2_circle.c
+            - path: ../Components/u8g2/u8g2_cleardisplay.c
+            - path: ../Components/u8g2/u8g2_d_memory.c
+            - path: ../Components/u8g2/u8g2_d_setup.c
+            - path: ../Components/u8g2/u8g2_font.c
+            - path: ../Components/u8g2/u8g2_fonts.c
+            - path: ../Components/u8g2/u8g2_hvline.c
+            - path: ../Components/u8g2/u8g2_input_value.c
+            - path: ../Components/u8g2/u8g2_intersection.c
+            - path: ../Components/u8g2/u8g2_kerning.c
+            - path: ../Components/u8g2/u8g2_line.c
+            - path: ../Components/u8g2/u8g2_ll_hvline.c
+            - path: ../Components/u8g2/u8g2_message.c
+            - path: ../Components/u8g2/u8g2_polygon.c
+            - path: ../Components/u8g2/u8g2_selection_list.c
+            - path: ../Components/u8g2/u8g2_setup.c
+            - path: ../Components/u8g2/u8log.c
+            - path: ../Components/u8g2/u8log_u8g2.c
+            - path: ../Components/u8g2/u8log_u8x8.c
+            - path: ../Components/u8g2/u8x8_8x8.c
+            - path: ../Components/u8g2/u8x8_byte.c
+            - path: ../Components/u8g2/u8x8_cad.c
+            - path: ../Components/u8g2/u8x8_capture.c
+            - path: ../Components/u8g2/u8x8_d_ssd1306_128x32.c
+            - path: ../Components/u8g2/u8x8_debounce.c
+            - path: ../Components/u8g2/u8x8_display.c
+            - path: ../Components/u8g2/u8x8_fonts.c
+            - path: ../Components/u8g2/u8x8_gpio.c
+            - path: ../Components/u8g2/u8x8_input_value.c
+            - path: ../Components/u8g2/u8x8_message.c
+            - path: ../Components/u8g2/u8x8_selection_list.c
+            - path: ../Components/u8g2/u8x8_setup.c
+            - path: ../Components/u8g2/u8x8_string.c
+            - path: ../Components/u8g2/u8x8_u8toa.c
+            - path: ../Components/u8g2/u8x8_u16toa.c
+          folders: []
+        - name: ebtn
+          files:
+            - path: ../Components/ebtn/ebtn.c
+          folders: []
+        - name: ringbuffer
+          files:
+            - path: ../Components/ringbuffer/ringbuffer.c
+          folders: []
+        - name: oled
+          files:
+            - path: ../Components/oled/oled.c
+          folders: []
+        - name: WouoUI_Page
+          files:
+            - path: ../Components/WouoUI_Page/WouoUI.c
+            - path: ../Components/WouoUI_Page/WouoUI_anim.c
+            - path: ../Components/WouoUI_Page/WouoUI_font.c
+            - path: ../Components/WouoUI_Page/WouoUI_graph.c
+            - path: ../Components/WouoUI_Page/WouoUI_msg.c
+            - path: ../Components/WouoUI_Page/WouoUI_page.c
+            - path: ../Components/WouoUI_Page/WouoUI_user.c
+            - path: ../Components/WouoUI_Page/WouoUI_win.c
+          folders: []
+        - name: GD25QXX
+          files:
+            - path: ../Components/GD25QXX/gd25qxx.c
+          folders: []
+        - name: LittleFs
+          files:
+            - path: ../Components/LittleFS/lfs.c
+            - path: ../Components/LittleFS/lfs_port.c
+            - path: ../Components/LittleFS/lfs_util.c
+          folders: []
+    - name: Drivers
+      files: []
+      folders:
+        - name: CMSIS
+          files:
+            - path: ../Core/Src/system_stm32f4xx.c
+          folders: []
+        - name: STM32F4xx_HAL_Driver
+          files:
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_adc.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_sdmmc.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sd.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_mmc.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c
+            - path: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
+          folders: []
+    - name: Middlewares
+      files: []
+      folders:
+        - name: FatFs
+          files:
+            - path: ../Middlewares/Third_Party/FatFs/src/diskio.c
+            - path: ../Middlewares/Third_Party/FatFs/src/ff.c
+            - path: ../Middlewares/Third_Party/FatFs/src/ff_gen_drv.c
+            - path: ../Middlewares/Third_Party/FatFs/src/option/syscall.c
+            - path: ../Middlewares/Third_Party/FatFs/src/option/cc936.c
+          folders: []
+        - name: Library
+          files: []
+          folders:
+            - name: DSP Library
+              files: []
+              folders:
+                - name: DSP Library
+                  files:
+                    - path: ../Middlewares/ST/ARM/DSP/Lib/arm_cortexM4l_math.lib
+                  folders: []
+    - name: ::CMSIS
+      files: []
+      folders: []
+dependenceList: []
+outDir: build
+miscInfo:
+  uid: d41939233118a31d6b69d027a7ad9335
+targets:
+  test2:
+    cppPreprocessAttrs:
+      defineList:
+        - USE_HAL_DRIVER
+        - STM32F429xx
+        - ARM_MATH_CM4
+      incList:
+        - ../Core/Inc
+        - ../Drivers/STM32F4xx_HAL_Driver/Inc
+        - ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy
+        - ../Drivers/CMSIS/Device/ST/STM32F4xx/Include
+        - ../Drivers/CMSIS/Include
+        - ../Middlewares/ST/ARM/DSP/Inc
+        - ../Components/ebtn
+        - ../Components/ringbuffer
+        - ../Components/oled
+        - ../Components/u8g2
+        - ../APP
+        - ../Components/WouoUI_Page
+        - ../Components/GD25QXX
+        - ../Components/LittleFS
+        - ../FATFS/Target
+        - ../FATFS/App
+        - ../Middlewares/Third_Party/FatFs/src
+        - .cmsis/include
+        - RTE/_test2
+      libList: []
+    excludeList: []
+    toolchain: AC5
+    toolchainConfigMap:
+      AC5:
+        archExtensions: ""
+        cpuType: Cortex-M4
+        floatingPointHardware: single
+        options:
+          version: 4
+          afterBuildTasks: []
+          asm-compiler: {}
+          beforeBuildTasks: []
+          c/cpp-compiler:
+            CXX_FLAGS: --no-multibyte-chars
+            C_FLAGS: --no-multibyte-chars
+            c99-mode: true
+            one-elf-section-per-function: true
+            optimization: level-3
+            warnings: no-warnings
+          global:
+            output-debug-info: enable
+            use-microLIB: true
+          linker:
+            $outputTaskExcludes:
+              - .bin
+            output-format: elf
+            ro-base: ""
+            rw-base: ""
+            xo-base: ""
+        scatterFilePath: ""
+        storageLayout:
+          RAM:
+            - id: 1
+              isChecked: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              noInit: false
+              tag: RAM
+            - id: 2
+              isChecked: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              noInit: false
+              tag: RAM
+            - id: 3
+              isChecked: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              noInit: false
+              tag: RAM
+            - id: 1
+              isChecked: true
+              mem:
+                size: "0x30000"
+                startAddr: "0x20000000"
+              noInit: false
+              tag: IRAM
+            - id: 2
+              isChecked: false
+              mem:
+                size: "0x10000"
+                startAddr: "0x10000000"
+              noInit: false
+              tag: IRAM
+          ROM:
+            - id: 1
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: ROM
+            - id: 2
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: ROM
+            - id: 3
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: ROM
+            - id: 1
+              isChecked: true
+              isStartup: true
+              mem:
+                size: "0x80000"
+                startAddr: "0x8000000"
+              tag: IROM
+            - id: 2
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: IROM
+        useCustomScatterFile: false
+      AC6:
+        archExtensions: ""
+        cpuType: Cortex-M4
+        floatingPointHardware: single
+        options: ""
+        scatterFilePath: ""
+        storageLayout:
+          RAM:
+            - id: 1
+              isChecked: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              noInit: false
+              tag: RAM
+            - id: 2
+              isChecked: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              noInit: false
+              tag: RAM
+            - id: 3
+              isChecked: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              noInit: false
+              tag: RAM
+            - id: 1
+              isChecked: true
+              mem:
+                size: "0x30000"
+                startAddr: "0x20000000"
+              noInit: false
+              tag: IRAM
+            - id: 2
+              isChecked: false
+              mem:
+                size: "0x10000"
+                startAddr: "0x10000000"
+              noInit: false
+              tag: IRAM
+          ROM:
+            - id: 1
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: ROM
+            - id: 2
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: ROM
+            - id: 3
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: ROM
+            - id: 1
+              isChecked: true
+              isStartup: true
+              mem:
+                size: "0x80000"
+                startAddr: "0x8000000"
+              tag: IROM
+            - id: 2
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: IROM
+        useCustomScatterFile: false
+    uploadConfigMap:
+      JLink:
+        baseAddr: ""
+        bin: ""
+        cpuInfo:
+          cpuName: "null"
+          vendor: "null"
+        otherCmds: ""
+        proType: 1
+        speed: 8000
+      OpenOCD:
+        baseAddr: "0x08000000"
+        bin: ""
+        interface: cmsis-dap
+        target: stm32f4x
+      probe-rs:
+        allowEraseAll: false
+        baseAddr: "0x08000000"
+        bin: ""
+        otherOptions: ""
+        protocol: swd
+        speed: 0
+        target: STM32F103C8
+    uploader: OpenOCD

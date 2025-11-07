@@ -1,0 +1,10 @@
+test2\lfs.o: ..\Components\LittleFS\lfs.c
+test2\lfs.o: ..\Components\LittleFS\lfs.h
+test2\lfs.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+test2\lfs.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+test2\lfs.o: ..\Components\LittleFS\lfs_util.h
+test2\lfs.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
+test2\lfs.o: D:\keil5\ARM\ARMCC\Bin\..\include\inttypes.h
+test2\lfs.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+test2\lfs.o: D:\keil5\ARM\ARMCC\Bin\..\include\assert.h
+test2\lfs.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h

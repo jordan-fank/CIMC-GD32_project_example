@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>智能终端管理系统</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="bg-decoration">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- 主容器 -->
+    <div class="app-container">
+        <!-- 顶部导航栏 -->
+        <nav class="navbar">
+            <div class="navbar-content">
+                <div class="navbar-left">
+                    <div class="app-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h1 class="app-title">智能终端管理系统</h1>
+                </div>
+                <div class="navbar-right">
+                    <!-- 主题切换 -->
+                    <button class="icon-btn theme-toggle" id="themeToggle" aria-label="切换主题">
+                        <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                        <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                        </svg>
+                    </button>
+                    <!-- 连接状态 -->
+                    <div class="connection-status" id="connectionStatus">
+                        <span class="status-indicator disconnected"></span>
+                        <span class="status-label">未连接</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 左侧面板 -->
+            <aside class="sidebar">
+                <!-- 服务器配置卡片 -->
+                <div class="card config-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="8" rx="2"/>
+                                <rect x="2" y="14" width="20" height="8" rx="2"/>
+                                <line x1="6" y1="6" x2="6.01" y2="6"/>
+                                <line x1="6" y1="18" x2="6.01" y2="18"/>
+                            </svg>
+                            服务器配置
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label for="serverHost" class="input-label">服务器地址</label>
+                            <input
+                                type="text"
+                                id="serverHost"
+                                class="input-field"
+                                placeholder="localhost 或 192.168.1.100"
+                                value="localhost"
+                                autocomplete="off"
+                            >
+                        </div>
+                        <div class="input-group">
+                            <label for="serverPort" class="input-label">端口</label>
+                            <input
+                                type="number"
+                                id="serverPort"
+                                class="input-field"
+                                placeholder="8080"
+                                value="8080"
+                                autocomplete="off"
+                            >
+                        </div>
+                        <div class="button-group">
+                            <button id="connectBtn" class="btn btn-primary">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                                    <circle cx="8.5" cy="7" r="4"/>
+                                    <path d="M20 8v6m3-3h-6"/>
+                                </svg>
+                                连接服务器
+                            </button>
+                            <button id="disconnectBtn" class="btn btn-danger" disabled>
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                                    <circle cx="8.5" cy="7" r="4"/>
+                                    <line x1="23" y1="11" x2="17" y2="11"/>
+                                </svg>
+                                断开连接
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 统计信息卡片 -->
+                <div class="card stats-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 3v18h18"/>
+                                <path d="M18 17V9"/>
+                                <path d="M13 17V5"/>
+                                <path d="M8 17v-3"/>
+                            </svg>
+                            实时统计
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="stats-list">
+                            <div class="stat-row">
+                                <div class="stat-icon stat-icon-send">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 2L11 13"/>
+                                        <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-label">发送消息</div>
+                                    <div class="stat-value" id="sentCount">0</div>
+                                </div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-icon stat-icon-receive">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                                        <polyline points="7 10 12 15 17 10"/>
+                                        <line x1="12" y1="15" x2="12" y2="3"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-label">接收消息</div>
+                                    <div class="stat-value" id="receivedCount">0</div>
+                                </div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-icon stat-icon-time">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="12 6 12 12 16 14"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-label">连接时长</div>
+                                    <div class="stat-value stat-value-time" id="uptime">00:00:00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 右侧主面板 -->
+            <section class="content-panel">
+                <!-- 消息输入卡片 -->
+                <div class="card compose-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/>
+                            </svg>
+                            编写消息
+                        </h2>
+                        <button id="sendBtn" class="btn btn-send" disabled>
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 2L11 13"/>
+                                <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+                            </svg>
+                            <span>发送</span>
+                            <span class="keyboard-hint">⌘ + Enter</span>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <textarea
+                            id="messageInput"
+                            class="message-textarea"
+                            placeholder="输入你的消息内容...&#10;&#10;提示：按 Ctrl + Enter (Mac: ⌘ + Enter) 快速发送"
+                            rows="4"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- 消息日志卡片 -->
+                <div class="card log-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                                <path d="M14 2v6h6"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <path d="M10 9H8"/>
+                            </svg>
+                            消息日志
+                        </h2>
+                        <div class="card-actions">
+                            <button id="clearLogBtn" class="icon-btn" aria-label="清空日志">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body log-body">
+                        <div id="messageLog" class="message-log">
+                            <!-- 空状态 -->
+                            <div class="empty-state">
+                                <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                                </svg>
+                                <p class="empty-text">暂无消息</p>
+                                <p class="empty-hint">连接服务器后，消息将显示在这里</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 引入JavaScript文件 -->
+    <script src="js/app.js"></script>
+</body>
+</html>

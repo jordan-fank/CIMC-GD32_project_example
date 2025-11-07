@@ -1,0 +1,26 @@
+{
+  "name": "claude-relay-meter-proxy",
+  "version": "1.0.0",
+  "description": "Claude Relay Meter 代理服务器 - 解决API兼容性问题",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node test-proxy.js"
+  },
+  "keywords": [
+    "claude",
+    "relay",
+    "meter",
+    "proxy",
+    "api"
+  ],
+  "author": "Claude Relay Meter Proxy",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

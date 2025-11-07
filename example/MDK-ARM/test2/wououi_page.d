@@ -1,0 +1,17 @@
+test2\wououi_page.o: ..\Components\WouoUI_Page\WouoUI_page.c
+test2\wououi_page.o: ..\Components\WouoUI_Page\WouoUI_page.h
+test2\wououi_page.o: ..\Components\WouoUI_Page\WouoUI_common.h
+test2\wououi_page.o: ..\Components\WouoUI_Page\WouoUI_conf.h
+test2\wououi_page.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+test2\wououi_page.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+test2\wououi_page.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+test2\wououi_page.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+test2\wououi_page.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdarg.h
+test2\wououi_page.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
+test2\wououi_page.o: ..\Components\WouoUI_Page\WouoUI_graph.h
+test2\wououi_page.o: ..\Components\WouoUI_Page\WouoUI_font.h
+test2\wououi_page.o: ..\Components\WouoUI_Page\WouoUI_anim.h
+test2\wououi_page.o: ..\Components\WouoUI_Page\WouoUI_msg.h
+test2\wououi_page.o: ..\Components\WouoUI_Page\WouoUI.h
+test2\wououi_page.o: ..\Components\WouoUI_Page\WouoUI_win.h
+test2\wououi_page.o: D:\keil5\ARM\ARMCC\Bin\..\include\math.h

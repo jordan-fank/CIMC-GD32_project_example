@@ -1,0 +1,22 @@
+{
+  "name": "terminal-management-system-backend",
+  "version": "1.0.0",
+  "description": "智能终端管理系统 - WebSocket后端服务器",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "node server.js",
+    "ws": "node server.js",
+    "test": "node test-websocket.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": ["websocket", "terminal", "management"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
