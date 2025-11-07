@@ -27,7 +27,7 @@ const processes = [];
 function startWebSocketServer() {
     log(colors.blue, '[启动]', '正在启动 WebSocket 服务器...');
 
-    const ws = spawn('node', ['server.js'], {
+    const ws = spawn('node', ['websocket-server.js'], {
         cwd: __dirname,
         stdio: 'inherit'
     });

@@ -4,9 +4,9 @@
 
 const WebSocket = require('ws');
 
-console.log('正��测试WebSocket连接到 localhost:8080...');
+console.log('正��测试WebSocket连接到 localhost:42623...');
 
-const ws = new WebSocket('ws://localhost:8080');
+const ws = new WebSocket('ws://localhost:42623');
 
 ws.on('open', () => {
     console.log('✅ WebSocket连接成功！');

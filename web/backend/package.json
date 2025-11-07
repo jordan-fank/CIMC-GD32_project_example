@@ -4,11 +4,12 @@
   "description": "智能终端管理系统 - WebSocket后端服务器",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "server": "node server.js",
-    "ws": "node server.js",
+    "start": "node start-all.js",
+    "server": "node start-all.js",
+    "ws": "node websocket-server.js",
+    "http": "node http-server.js",
     "test": "node test-websocket.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon websocket-server.js"
   },
   "keywords": ["websocket", "terminal", "management"],
   "author": "",

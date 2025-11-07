@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 配置参数
-const HTTP_PORT = 3000;  // HTTP服务端口
+const HTTP_PORT = 8080;  // HTTP服务端口（匹配内网穿透配置）
 const FRONTEND_DIR = path.join(__dirname, '../frontend');  // 前端文件目录
 
 // MIME类型映射

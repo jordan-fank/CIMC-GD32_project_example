@@ -398,11 +398,10 @@ class TerminalManager {
      */
     autoDetectServer() {
         const currentHost = window.location.hostname;
-        const currentPort = window.location.port || (window.location.protocol === 'https:' ? '443' : '80');
         if (currentHost && currentHost !== 'localhost' && currentHost !== '127.0.0.1') {
             this.elements.serverHost.value = currentHost;
-            this.elements.serverPort.value = currentPort;
-            console.log(`[自动配置] 检测到域名访问: ${currentHost}:${currentPort}`);
+            this.elements.serverPort.value = '42623'; // 固定WebSocket端口
+            console.log(`[自动配置] 检测到域名访问: ${currentHost}:42623`);
         }
     }
 
