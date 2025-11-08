@@ -1,4 +1,5 @@
 #include "adc_app.h"
+#include "4g_web.h"  // 添加WebSocket通信支持
 
 
 /*
@@ -298,12 +299,11 @@ void adc_task(void)
 
         if (uart_send_flag == 1)
         {
-            // 示例：通过串口打印处理后的数据
-            for (uint16_t i = 0; i < BUFFER_SIZE / 2; i++)
-            {
-                // 注意: 原代码格式化字符串 "{dac}%d\r\n" 可能用于特定解析，予以保留
-                my_printf(&huart1, "{dac}%d\r\n", (int)dac_val_buffer[i]);
-            }
+            // 通过WebSocket发送ADC电压数据到前端网页
+            websocket_send_adc_data(voltage);
+
+            // 可选：发送部分原始采样数据用于详细分析
+            // websocket_send_adc_batch(dac_val_buffer, BUFFER_SIZE / 2);
         }
 
         // 如果设置了波形分析标志，则进行波形分析

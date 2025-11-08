@@ -29,8 +29,30 @@ class TerminalManager {
             sentCount: document.getElementById('sentCount'),
             receivedCount: document.getElementById('receivedCount'),
             uptime: document.getElementById('uptime'),
-            themeToggle: document.getElementById('themeToggle')
+            themeToggle: document.getElementById('themeToggle'),
+            // ADC相关元素
+            adcCurrentValue: document.getElementById('adcCurrentValue'),
+            adcMaxValue: document.getElementById('adcMaxValue'),
+            adcMinValue: document.getElementById('adcMinValue'),
+            adcAvgValue: document.getElementById('adcAvgValue'),
+            clearAdcBtn: document.getElementById('clearAdcBtn'),
+            adcChart: document.getElementById('adcChart')
         };
+
+        // ADC数据管理
+        this.adcData = {
+            values: [],
+            timestamps: [],
+            maxValues: 50, // 最多显示50个数据点
+            currentVoltage: 0,
+            maxVoltage: 0,
+            minVoltage: 3.3,
+            sumVoltage: 0,
+            count: 0
+        };
+
+        // ADC图表实例
+        this.adcChart = null;
 
         // 初始化
         this.init();
@@ -64,6 +86,14 @@ class TerminalManager {
 
         // 清空日志按钮
         this.elements.clearLogBtn.addEventListener('click', () => this.clearLog());
+
+        // ADC清空数据按钮
+        if (this.elements.clearAdcBtn) {
+            this.elements.clearAdcBtn.addEventListener('click', () => this.clearAdcData());
+        }
+
+        // 初始化ADC图表
+        this.initAdcChart();
 
         // 从本地存储恢复配置
         this.loadConfig();
@@ -221,6 +251,20 @@ class TerminalManager {
      */
     processMessage(text) {
         try {
+            // 检查是否为ADC数据 (格式: ADC:2.35)
+            if (text.startsWith('ADC:')) {
+                const voltageStr = text.substring(4).trim();
+                const voltage = parseFloat(voltageStr);
+
+                if (!isNaN(voltage)) {
+                    // 处理ADC数据
+                    this.handleAdcData(voltage);
+                    // 同时在日志中显示ADC数据
+                    this.addLog('info', `ADC数据: ${voltage.toFixed(2)}V`, 'adc');
+                    return;
+                }
+            }
+
             // 尝试解析JSON
             const jsonData = JSON.parse(text);
 
@@ -465,6 +509,251 @@ class TerminalManager {
         if (emptyState) {
             emptyState.style.display = hasMessages ? 'none' : 'flex';
         }
+    }
+
+    // ========================================
+    // ADC数据处理相关方法
+    // ========================================
+
+    /**
+     * 初始化ADC图表
+     */
+    initAdcChart() {
+        if (!this.elements.adcChart) return;
+
+        const ctx = this.elements.adcChart.getContext('2d');
+
+        this.adcChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'ADC电压 (V)',
+                    data: [],
+                    borderColor: '#007AFF',
+                    backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
+                    pointBackgroundColor: '#007AFF',
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 200
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: '时间',
+                            color: '#8E8E93',
+                            font: {
+                                size: 12
+                            }
+                        },
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 10,
+                            color: '#8E8E93'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: '电压 (V)',
+                            color: '#8E8E93',
+                            font: {
+                                size: 12
+                            }
+                        },
+                        min: 0,
+                        max: 3.3,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        ticks: {
+                            stepSize: 0.5,
+                            color: '#8E8E93',
+                            callback: function(value) {
+                                return value.toFixed(1);
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: '#3C3C43',
+                            font: {
+                                size: 12,
+                                weight: '500'
+                            },
+                            usePointStyle: true,
+                            boxWidth: 6
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#FFFFFF',
+                        bodyColor: '#FFFFFF',
+                        titleFont: {
+                            size: 12,
+                            weight: '600'
+                        },
+                        bodyFont: {
+                            size: 12
+                        },
+                        padding: 12,
+                        cornerRadius: 8,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                return `电压: ${context.parsed.y.toFixed(2)}V`;
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                }
+            }
+        });
+    }
+
+    /**
+     * 处理ADC数据更新
+     * @param {number} voltage - ADC电压值
+     */
+    handleAdcData(voltage) {
+        // 更新当前电压
+        this.adcData.currentVoltage = voltage;
+        this.adcData.count++;
+        this.adcData.sumVoltage += voltage;
+
+        // 更新最大最小值
+        if (voltage > this.adcData.maxVoltage) {
+            this.adcData.maxVoltage = voltage;
+        }
+        if (voltage < this.adcData.minVoltage) {
+            this.adcData.minVoltage = voltage;
+        }
+
+        // 添加到数据数组
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('zh-CN', {
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+
+        this.adcData.values.push(voltage);
+        this.adcData.timestamps.push(timeString);
+
+        // 限制数据点数量
+        if (this.adcData.values.length > this.adcData.maxValues) {
+            this.adcData.values.shift();
+            this.adcData.timestamps.shift();
+        }
+
+        // 更新显示
+        this.updateAdcDisplay();
+        this.updateAdcChart();
+    }
+
+    /**
+     * 更新ADC数据显示
+     */
+    updateAdcDisplay() {
+        if (!this.elements.adcCurrentValue) return;
+
+        // 更新当前值
+        this.elements.adcCurrentValue.textContent = this.adcData.currentVoltage.toFixed(2);
+
+        // 更新统计值
+        if (this.elements.adcMaxValue) {
+            this.elements.adcMaxValue.textContent = this.adcData.maxVoltage.toFixed(2);
+        }
+        if (this.elements.adcMinValue) {
+            this.elements.adcMinValue.textContent = this.adcData.minVoltage.toFixed(2);
+        }
+        if (this.elements.adcAvgValue && this.adcData.count > 0) {
+            const avgVoltage = this.adcData.sumVoltage / this.adcData.count;
+            this.elements.adcAvgValue.textContent = avgVoltage.toFixed(2);
+        }
+
+        // 根据电压值设置颜色
+        const voltageElement = this.elements.adcCurrentValue;
+        voltageElement.classList.remove('high', 'medium', 'low');
+
+        if (this.adcData.currentVoltage > 2.5) {
+            voltageElement.classList.add('high');
+        } else if (this.adcData.currentVoltage > 1.5) {
+            voltageElement.classList.add('medium');
+        } else {
+            voltageElement.classList.add('low');
+        }
+    }
+
+    /**
+     * 更新ADC图表
+     */
+    updateAdcChart() {
+        if (!this.adcChart) return;
+
+        this.adcChart.data.labels = this.adcData.timestamps;
+        this.adcChart.data.datasets[0].data = this.adcData.values;
+        this.adcChart.update('none'); // 无动画更新，提高性能
+    }
+
+    /**
+     * 清空ADC数据
+     */
+    clearAdcData() {
+        this.adcData = {
+            values: [],
+            timestamps: [],
+            maxValues: 50,
+            currentVoltage: 0,
+            maxVoltage: 0,
+            minVoltage: 3.3,
+            sumVoltage: 0,
+            count: 0
+        };
+
+        // 重置显示
+        if (this.elements.adcCurrentValue) {
+            this.elements.adcCurrentValue.textContent = '0.00';
+        }
+        if (this.elements.adcMaxValue) {
+            this.elements.adcMaxValue.textContent = '0.00';
+        }
+        if (this.elements.adcMinValue) {
+            this.elements.adcMinValue.textContent = '0.00';
+        }
+        if (this.elements.adcAvgValue) {
+            this.elements.adcAvgValue.textContent = '0.00';
+        }
+
+        // 清空图表
+        this.updateAdcChart();
+
+        // 添加清空日志
+        this.addLogEntry('系统', 'ADC数据已清空', 'system');
     }
 }
 

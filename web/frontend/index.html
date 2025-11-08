@@ -7,6 +7,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>智能终端管理系统</title>
     <link rel="stylesheet" href="css/style.css">
+    <!-- Chart.js库用于数据图表绘制 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <!-- 背景装饰 -->
@@ -176,6 +178,54 @@
 
             <!-- 右侧主面板 -->
             <section class="content-panel">
+                <!-- ADC数据监控卡片 -->
+                <div class="card adc-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                            ADC数据监控
+                        </h2>
+                        <div class="card-actions">
+                            <button id="clearAdcBtn" class="icon-btn" aria-label="清空ADC数据">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- ADC数据显示 -->
+                        <div class="adc-display">
+                            <div class="adc-current">
+                                <div class="adc-label">当前电压</div>
+                                <div class="adc-value" id="adcCurrentValue">0.00</div>
+                                <div class="adc-unit">V</div>
+                            </div>
+                            <div class="adc-stats">
+                                <div class="adc-stat">
+                                    <div class="adc-stat-label">最大值</div>
+                                    <div class="adc-stat-value" id="adcMaxValue">0.00</div>
+                                </div>
+                                <div class="adc-stat">
+                                    <div class="adc-stat-label">最小值</div>
+                                    <div class="adc-stat-value" id="adcMinValue">0.00</div>
+                                </div>
+                                <div class="adc-stat">
+                                    <div class="adc-stat-label">平均值</div>
+                                    <div class="adc-stat-value" id="adcAvgValue">0.00</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ADC图表容器 -->
+                        <div class="adc-chart-container">
+                            <canvas id="adcChart" width="800" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- 消息输入卡片 -->
                 <div class="card compose-card">
                     <div class="card-header">

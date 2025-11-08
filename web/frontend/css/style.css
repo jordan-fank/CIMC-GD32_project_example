@@ -1026,3 +1026,197 @@ body {
 .debug-toggle:hover::after {
     opacity: 1;
 }
+
+/* ========================================
+   ADC数据监控卡片样式
+   ======================================== */
+
+/* ADC卡片容器 */
+.adc-card {
+    background: var(--bg-primary);
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    margin-bottom: 24px;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.adc-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ADC数据显示区域 */
+.adc-display {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-bottom: 24px;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, rgba(52, 199, 89, 0.05) 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 122, 255, 0.1);
+}
+
+/* 当前电压显示 */
+.adc-current {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex: 1;
+}
+
+.adc-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.adc-value {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--color-primary);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 122, 255, 0.1);
+}
+
+.adc-unit {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+/* ADC统计信息 */
+.adc-stats {
+    display: flex;
+    gap: 24px;
+    flex: 1;
+    justify-content: space-around;
+}
+
+.adc-stat {
+    text-align: center;
+    padding: 16px;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    min-width: 80px;
+    transition: all 0.3s ease;
+}
+
+.adc-stat:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--color-primary-light);
+}
+
+.adc-stat-label {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.adc-stat-value {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ADC图表容器 */
+.adc-chart-container {
+    position: relative;
+    height: 300px;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    padding: 16px;
+}
+
+.adc-chart-container canvas {
+    max-height: 100%;
+    border-radius: 8px;
+}
+
+/* 响应式设计 - 移动端优化 */
+@media (max-width: 768px) {
+    .adc-display {
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+    }
+
+    .adc-value {
+        font-size: 36px;
+    }
+
+    .adc-stats {
+        gap: 12px;
+        width: 100%;
+    }
+
+    .adc-stat {
+        padding: 12px 8px;
+        min-width: 60px;
+    }
+
+    .adc-stat-value {
+        font-size: 16px;
+    }
+
+    .adc-chart-container {
+        height: 250px;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .adc-value {
+        font-size: 28px;
+    }
+
+    .adc-stats {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .adc-stat {
+        flex: 1;
+        min-width: calc(33.333% - 8px);
+    }
+
+    .adc-chart-container {
+        height: 200px;
+    }
+}
+
+/* 数据更新动画 */
+.adc-value {
+    transition: color 0.3s ease;
+}
+
+.adc-value.high {
+    color: var(--color-danger);
+}
+
+.adc-value.medium {
+    color: var(--color-warning);
+}
+
+.adc-value.low {
+    color: var(--color-success);
+}
+
+/* 图表工具提示自定义样式 */
+.adc-chart-container .chart-tooltip {
+    background: rgba(0, 0, 0, 0.8) !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    backdrop-filter: blur(10px) !important;
+}

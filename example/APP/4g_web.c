@@ -260,6 +260,47 @@ void websocket_send_led_response(uint8_t led_num, uint8_t state)
 }
 
 /**
+ * @brief 发送ADC电压数据给WebSocket客户端
+ * @param voltage ADC电压值 (浮点数)
+ */
+void websocket_send_adc_data(float voltage)
+{
+    char adc_msg[32];
+    int len;
+
+    // 构建ADC数据消息：ADC:2.35
+    len = snprintf(adc_msg, sizeof(adc_msg), "ADC:%.2f", voltage);
+
+    // 通过串口6发送ADC数据给WebSocket模块
+    HAL_UART_Transmit(&huart6, (uint8_t*)adc_msg, len, 100);
+
+    my_printf(&huart1, "[WebSocket] 发送ADC数据: %s\r\n", adc_msg);
+}
+
+/**
+ * @brief 批量发送ADC采样数据给WebSocket客户端
+ * @param adc_data ADC采样数据数组
+ * @param count 数据个数
+ */
+void websocket_send_adc_batch(uint32_t *adc_data, uint16_t count)
+{
+    char adc_msg[64];
+
+    // 发送一批ADC数据，每条消息格式：ADC:1234
+    for (uint16_t i = 0; i < count && i < 10; i++) {  // 限制每次最多发送10个数据点
+        int len = snprintf(adc_msg, sizeof(adc_msg), "ADC:%d", (int)adc_data[i]);
+
+        // 通过串口6发送ADC数据给WebSocket模块
+        HAL_UART_Transmit(&huart6, (uint8_t*)adc_msg, len, 100);
+
+        // 短暂延时避免发送过快
+        HAL_Delay(1);
+    }
+
+    my_printf(&huart1, "[WebSocket] 批量发送ADC数据，数量: %d\r\n", count);
+}
+
+/**
  * @brief 获取LED控制模式
  * @return 0=自动模式, 1=手动控制模式
  */
