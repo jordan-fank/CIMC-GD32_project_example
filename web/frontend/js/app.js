@@ -88,6 +88,7 @@ class TerminalManager {
         }
 
         // 构建WebSocket URL
+        // 分离式架构：WebSocket在42623端口
         const wsUrl = `ws://${host}:${port}`;
 
         try {
@@ -116,6 +117,13 @@ class TerminalManager {
             // 错误事件
             this.ws.onerror = (error) => {
                 this.onError(error);
+                // 如果是公网域名连接失败，提供备用方案
+                if (host !== 'localhost' && host !== '127.0.0.1') {
+                    this.addLog('error', '连接失败！如果使用移动网络，请尝试以下方案：');
+                    this.addLog('tip', '方案1：连接WiFi网络后重试');
+                    this.addLog('tip', '方案2：手动配置为localhost，然后通过端口转发连接');
+                    this.addLog('tip', '方案3：确认FRP TCP隧道配置正确');
+                }
             };
 
         } catch (error) {
@@ -399,9 +407,9 @@ class TerminalManager {
     autoDetectServer() {
         const currentHost = window.location.hostname;
         if (currentHost && currentHost !== 'localhost' && currentHost !== '127.0.0.1') {
-            this.elements.serverHost.value = currentHost;
-            this.elements.serverPort.value = '42623'; // 固定WebSocket端口
-            console.log(`[自动配置] 检测到域名访问: ${currentHost}:42623`);
+            this.elements.serverHost.value = 'hk-4.lcf.im'; // FRP TCP隧道地址
+            this.elements.serverPort.value = '47315'; // TCP隧道端口
+            console.log(`[自动配置] 检测到域名访问: hk-4.lcf.im:47315`);
         }
     }
 

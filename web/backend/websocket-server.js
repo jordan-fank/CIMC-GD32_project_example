@@ -6,7 +6,7 @@
 const WebSocket = require('ws');
 
 // 配置参数
-const WS_PORT = 42623;  // WebSocket服务端口（避免冲突）
+const WS_PORT = 47315;  // WebSocket服务端口（FRP随机分配）
 const HEARTBEAT_INTERVAL = 30000;  // 心跳检测间隔（30秒）
 
 // 存储所有已连接的客户端
