@@ -37,6 +37,17 @@ void led_disp(uint8_t *ucLed)
 //led处理函数
 void led_task(void)
 {
+    // 检查是否为WebSocket手动控制模式
+    extern uint8_t websocket_get_led_control_mode(void);
+
+    if (websocket_get_led_control_mode() == 1)
+    {
+        // 手动控制模式：只更新显示，不执行特效
+        led_disp(ucLed);
+        return;
+    }
+
+    // 自动模式：可以执行呼吸灯、流水灯等特效
 //	wave_led();
     led_disp(ucLed);                    // 调用led_disp函数更新LED状态
 }

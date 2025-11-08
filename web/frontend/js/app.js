@@ -449,6 +449,13 @@ class TerminalManager {
     }
 
     /**
+     * 切换到调试模式
+     */
+    switchToDebugMode() {
+        window.location.href = 'debug.html';
+    }
+
+    /**
      * 显示/隐藏空状态
      */
     toggleEmptyState() {
@@ -466,3 +473,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.terminalManager = new TerminalManager();
     console.log('智能终端管理系统已初始化');
 });
+
+/**
+ * 全局函数：切换到调试模式（供HTML调用）
+ */
+function switchToDebugMode() {
+    window.location.href = 'debug.html';
+}

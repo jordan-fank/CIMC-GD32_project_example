@@ -986,3 +986,43 @@ body {
     background: var(--color-primary-light);
     color: var(--text-primary);
 }
+
+/* 调试模式切换按钮 */
+.debug-toggle {
+    position: relative;
+}
+
+.debug-toggle:hover {
+    color: #ff6b6b !important;
+    background: rgba(255, 107, 107, 0.1) !important;
+}
+
+.debug-toggle:active {
+    transform: scale(0.95);
+}
+
+.debug-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* 调试模式提示 */
+.debug-toggle::after {
+    content: '调试模式';
+    position: absolute;
+    bottom: -25px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.debug-toggle:hover::after {
+    opacity: 1;
+}

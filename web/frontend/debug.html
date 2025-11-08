@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能终端调试系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 调试模式专用样式 */
+        .debug-header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .mode-toggle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .mode-toggle:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .led-control-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .led-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid #f0f0f0;
+        }
+
+        .led-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+        .led-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .led-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 3px solid #ddd;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .led-indicator.on {
+            background: radial-gradient(circle, #ffeb3b 0%, #ffc107 70%);
+            border-color: #ff9800;
+            box-shadow: 0 0 20px rgba(255,193,7,0.6);
+        }
+
+        .led-indicator.off {
+            background: radial-gradient(circle, #9e9e9e 0%, #757575 70%);
+            border-color: #616161;
+        }
+
+        .led-indicator.on::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+
+        .led-info h3 {
+            margin: 0;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .led-status {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .led-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .led-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .led-btn.turn-on {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+        }
+
+        .led-btn.turn-on:hover {
+            background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+            transform: scale(1.02);
+        }
+
+        .led-btn.turn-off {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            color: white;
+        }
+
+        .led-btn.turn-off:hover {
+            background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
+            transform: scale(1.02);
+        }
+
+        .led-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .control-status {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .status-text {
+            color: #666;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .protocol-info {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 30px;
+        }
+
+        .protocol-title {
+            color: #856404;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .protocol-example {
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin: 5px 0;
+            color: #495057;
+            font-size: 13px;
+        }
+
+        .system-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4caf50;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .status-dot.disconnected {
+            background: #f44336;
+            animation: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 调试模式头部 -->
+    <header class="debug-header">
+        <h1>🔧 智能终端调试系统</h1>
+        <p>LED控制面板 - 实时调试模式</p>
+        <button class="mode-toggle" onclick="switchToNormalMode()">
+            切换到正常模式
+        </button>
+    </header>
+
+    <!-- 协议说明 -->
+    <div class="protocol-info">
+        <div class="protocol-title">📡 通信协议说明</div>
+        <div class="protocol-example">LED:1,1 → LED1开启</div>
+        <div class="protocol-example">LED:1,0 → LED1关闭</div>
+        <div class="protocol-example">LED:2,1 → LED2开启</div>
+        <div class="protocol-example">格式：LED:&lt;编号&gt;,&lt;状态&gt;</div>
+    </div>
+
+    <!-- LED控制面板 -->
+    <main class="led-control-panel">
+        <!-- LED1 -->
+        <div class="led-card" data-led="1">
+            <div class="led-header">
+                <div class="led-indicator off" id="led1-indicator"></div>
+                <div class="led-info">
+                    <h3>LED 1</h3>
+                    <div class="led-status" id="led1-status">当前状态：关闭</div>
+                </div>
+            </div>
+            <div class="led-controls">
+                <button class="led-btn turn-on" onclick="controlLED(1, 1)">开启</button>
+                <button class="led-btn turn-off" onclick="controlLED(1, 0)">关闭</button>
+            </div>
+            <div class="control-status">
+                <p class="status-text" id="led1-log">等待操作...</p>
+            </div>
+        </div>
+
+        <!-- LED2 -->
+        <div class="led-card" data-led="2">
+            <div class="led-header">
+                <div class="led-indicator off" id="led2-indicator"></div>
+                <div class="led-info">
+                    <h3>LED 2</h3>
+                    <div class="led-status" id="led2-status">当前状态：关闭</div>
+                </div>
+            </div>
+            <div class="led-controls">
+                <button class="led-btn turn-on" onclick="controlLED(2, 1)">开启</button>
+                <button class="led-btn turn-off" onclick="controlLED(2, 0)">关闭</button>
+            </div>
+            <div class="control-status">
+                <p class="status-text" id="led2-log">等待操作...</p>
+            </div>
+        </div>
+
+        <!-- LED3 -->
+        <div class="led-card" data-led="3">
+            <div class="led-header">
+                <div class="led-indicator off" id="led3-indicator"></div>
+                <div class="led-info">
+                    <h3>LED 3</h3>
+                    <div class="led-status" id="led3-status">当前状态：关闭</div>
+                </div>
+            </div>
+            <div class="led-controls">
+                <button class="led-btn turn-on" onclick="controlLED(3, 1)">开启</button>
+                <button class="led-btn turn-off" onclick="controlLED(3, 0)">关闭</button>
+            </div>
+            <div class="control-status">
+                <p class="status-text" id="led3-log">等待操作...</p>
+            </div>
+        </div>
+
+        <!-- LED4 -->
+        <div class="led-card" data-led="4">
+            <div class="led-header">
+                <div class="led-indicator off" id="led4-indicator"></div>
+                <div class="led-info">
+                    <h3>LED 4</h3>
+                    <div class="led-status" id="led4-status">当前状态：关闭</div>
+                </div>
+            </div>
+            <div class="led-controls">
+                <button class="led-btn turn-on" onclick="controlLED(4, 1)">开启</button>
+                <button class="led-btn turn-off" onclick="controlLED(4, 0)">关闭</button>
+            </div>
+            <div class="control-status">
+                <p class="status-text" id="led4-log">等待操作...</p>
+            </div>
+        </div>
+
+        <!-- LED5 -->
+        <div class="led-card" data-led="5">
+            <div class="led-header">
+                <div class="led-indicator off" id="led5-indicator"></div>
+                <div class="led-info">
+                    <h3>LED 5</h3>
+                    <div class="led-status" id="led5-status">当前状态：关闭</div>
+                </div>
+            </div>
+            <div class="led-controls">
+                <button class="led-btn turn-on" onclick="controlLED(5, 1)">开启</button>
+                <button class="led-btn turn-off" onclick="controlLED(5, 0)">关闭</button>
+            </div>
+            <div class="control-status">
+                <p class="status-text" id="led5-log">等待操作...</p>
+            </div>
+        </div>
+
+        <!-- LED6 -->
+        <div class="led-card" data-led="6">
+            <div class="led-header">
+                <div class="led-indicator off" id="led6-indicator"></div>
+                <div class="led-info">
+                    <h3>LED 6</h3>
+                    <div class="led-status" id="led6-status">当前状态：关闭</div>
+                </div>
+            </div>
+            <div class="led-controls">
+                <button class="led-btn turn-on" onclick="controlLED(6, 1)">开启</button>
+                <button class="led-btn turn-off" onclick="controlLED(6, 0)">关闭</button>
+            </div>
+            <div class="control-status">
+                <p class="status-text" id="led6-log">等待操作...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- 系统状态 -->
+    <div class="system-status">
+        <div class="status-dot" id="connection-status"></div>
+        <span id="connection-text">连接正常</span>
+    </div>
+
+    <script src="js/debug.js"></script>
+</body>
+</html>
